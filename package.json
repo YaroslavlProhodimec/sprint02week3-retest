@@ -1,7 +1,7 @@
 {
   "name": "3back",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "dist/index.js",
   "license": "MIT",
   "dependencies": {
     "@types/date-fns": "^2.6.0",
@@ -28,7 +28,9 @@
   "scripts": {
     "dev": "yarn nodemon --inspect dist/index.js",
     "watch": "tsc -w",
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc",
+    "start": "node dist/index.js"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.2",
