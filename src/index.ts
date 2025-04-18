@@ -34,10 +34,6 @@ runDb().catch(console.error)
 app.get('/', (req, res) => {
     res.send('API is working!')
 })
-app.get('/', (req, res) => {
-    res.send('API is working!')
-})
-
 
 app.use('/blogs', blogRoute)
 app.use('/posts', postRoute)
