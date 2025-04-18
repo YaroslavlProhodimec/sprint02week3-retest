@@ -10,9 +10,6 @@ import {authRouter} from "./routes/auth-route";
 import {usersRouter} from "./routes/users-route";
 import {commentsRoute} from "./routes/comments-route";
 import {emailRouter} from "./routes/email-router";
-import { Request, Response } from 'express';
-
-// app.use('/testing',testingRouter)
 
 dotenv.config()
 const mongoURI = process.env.MONGO_URL || 'mongodb://localhost:27017'
@@ -23,12 +20,24 @@ const client = new MongoClient(mongoURI);
 async function runDb() {
     try {
         await client.connect()
+        console.log('Connected to MongoDB')
     } catch (e) {
+        console.error('Failed to connect to MongoDB:', e)
         await client.close()
     }
 }
 
-const port = process.env.PORT || 5001
+// Инициализируем базу данных перед настройкой маршрутов
+runDb().catch(console.error)
+
+// Добавляем обработчик для корневого маршрута
+app.get('/', (req, res) => {
+    res.send('API is working!')
+})
+app.get('/', (req, res) => {
+    res.send('API is working!')
+})
+
 
 app.use('/blogs', blogRoute)
 app.use('/posts', postRoute)
@@ -45,9 +54,7 @@ const postCollection = dbBlogs.collection<PostType>('post')
 const commentsCollection = dbBlogs.collection('comments')
 const usersCollection = dbBlogs.collection<any>('users')
 
-export default async function handler(req: Request, res: Response) {
-    await runDb()
-    return app(req, res)
-}
-
 export { blogCollection, postCollection, commentsCollection, usersCollection }
+
+// Экспортируем приложение для Vercel
+export default app
